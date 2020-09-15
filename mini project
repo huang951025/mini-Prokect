@@ -1,0 +1,64 @@
+
+/**
+ * Class: CIS214 Computer Science
+ * Author: Wei Wen Huang
+ * Date: 9/3/2020
+ * Describe: a printer toner checker notice if toner is blow 10%  
+ */
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException; 
+
+public class miniProject {
+	
+	public static void main(String[] args) {
+		//set the address for the CSV
+		File f=new File("E://javaworkspace/Mini Project Toner Report - Sheet1.csv");
+		checkSystem(f);//toner checker
+		
+	}
+	
+	public static void checkSystem(File f){	
+		
+		System.out.println("Toner Checker is runing...");
+		//read the CSV
+		try {
+			BufferedReader textFile = new BufferedReader(new FileReader(f));
+			textFile.readLine();//skip to next line
+			String line = null;
+			
+			System.out.println("Read the toner imformation...");
+			
+			while((line = textFile.readLine()) != null) {
+			String item[] = line.split(","); //split
+			String color = item[item.length - 2]; //find the black toner
+			String black = item[item.length - 1]; // find the color toner
+			int colorToner = Integer.parseInt(color);//change to integer
+			int blackToner = Integer.parseInt(black);
+			
+			//check the Toner
+			if(colorToner < 10) {
+				System.out.println("Printer: " + item[0] +" The color toner is lower than 10% only " + color + "%.");	
+			}// end color toner check
+			if(blackToner < 10) {
+				System.out.println("Printer: " + item[0] +" The black toner is lower than 10% only " + black + "%.");	
+			}//end black toner check
+			
+			}//end while loop
+			System.out.println("Toner Cheker is end.");
+			
+			 
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+		    System.out.println("Can't find the file");
+		    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		    System.out.println("Can't read the file");
+		}
+	  
+	}
+}
